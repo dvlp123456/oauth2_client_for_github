@@ -88,12 +88,34 @@ if(isset($_GET['action']) && $_GET['action'] == 'repos') {
   echo '</ul>';
 }
 
+
+if(isset($_GET['action']) && $_GET['action'] == 'profile') {
+  // Get the authenticated user profile information
+  $profile = apiRequest($apiURLBase.'user');
+
+  echo '<table border="1">';
+  echo '<tr>';
+  echo '<td>Name';
+  echo '</td>';
+  echo '<td>' . $profile['name'];
+  echo '</td>';
+  echo '</tr>';
+  echo '<tr>';
+  echo '<td>Bio';
+  echo '</td>';
+  echo '<td>' . $profile['bio'];
+  echo '</td>';
+  echo '</tr>';
+  echo '</table>';
+}
+
 // If there is an access token in the session
 // the user is already logged in
 if(!isset($_GET['action'])) {
   if(!empty($_SESSION['access_token'])) {
     echo '<h3>Logged In</h3>';
     echo '<p><a href="?action=repos">View Repos</a></p>';
+    echo '<p><a href="?action=profile">View Profile Information</a></p>';
     echo '<p><a href="?action=logout">Log Out</a></p>';
   } else {
     echo '<h3>Not logged in</h3>';
